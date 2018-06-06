@@ -20,14 +20,14 @@
           <td><%= friend_req.acceptor.name %></td>
           <td><%= friend_req.status %></td>
           <td><%= link_to 'Show', friend_req %></td>
-          <td><%= link_to 'Unfriend', friend_req, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Unfriend', friend_req, method: :delete, data: { confirm: 'Are you sure?' } %></td>``
 
           
 
         <% else %>
           <td><%= friend_req.sender.name %></td>
           <td><%= friend_req.status %></td>
-          <td><%= link_to 'Accept Request',friend_path(:friend => {:sender_id => friend_req.sender,:acceptor_id => current_user , :status => 'TRUE'},:id => friend_req.id), :method => :put  %></td>
+          <td><%= link_to 'Accept Request',friend_path(:friend_path => {:sender_id => friend_req.sender,:acceptor_id => current_user , :status  => 'TRUE'},:id => friend_req.id), :method => :put  %></td>
           <td><%= link_to 'Show', friend_req %></td>
           <td><%= link_to 'Unfriend', friend_req, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
