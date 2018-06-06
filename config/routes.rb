@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :friends
   devise_for :users, :controllers => { registrations: 'users/registrations' }
-  resources :posts
+  resources :posts do 
+  	resources :comments
+  end
   root 'posts#index'
   resources :conversations do
   resources :messages

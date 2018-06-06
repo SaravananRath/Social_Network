@@ -11,9 +11,37 @@
 </p>
 
 <p>
-  <strong>User Name:</strong>
+  <strong>Post By:</strong>
   <%= @post.user.name %>
 </p>
+
+
+<h2>Comments</h2>
+<%@post.comments.each do |comment| %>
+<p>
+ 	<strong>Commenter:</strong>
+ 	<%= comment.commenter %>
+</p>
+<p>
+ 	<strong>Comment:</strong>
+ 	<%= comment.body %>
+</p>
+<% end %>
+
+<h2> Add a comment</h2>
+
+<%= form_for ([@post, @post.comments.build]) do |f| %>
+	<p>
+	 	<%= f.label :commenter %>
+	 	<%= f.text_field :commenter %>
+	</p>
+	<p>
+	 	<%= f.label :body %>
+	 	<%= f.text_field :body %>
+	</p>
+	<p> <%= f.submit %></p>
+	<% end %>
+
 
 <% if current_user == @post.user%>
 
