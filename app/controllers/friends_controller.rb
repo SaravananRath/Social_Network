@@ -18,6 +18,8 @@ class FriendsController < ApplicationController
   def new
     @friend = Friend.new
     @users = User.all
+    @user_friends = User.friends(current_user.id)
+    @display = @users - @user_friends
   end
 
   # GET /friends/1/edit   
