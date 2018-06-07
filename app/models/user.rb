@@ -2,6 +2,13 @@ class User < ApplicationRecord
  
 has_many :posts
 
+has_many :comments, through: :posts
+
+has_many :likes, through: :posts
+
+
+
+
 has_many :sent_requests, foreign_key: :sender_id, class_name: 'Friend'
 
 has_many :acceptors, :through => :sent_requests, source: :acceptor

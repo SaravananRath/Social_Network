@@ -1,52 +1,77 @@
-<p id="notice"><%= notice %></p>
+	<style type="text/css">
 
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
+	.hidden{
+	display:none;
+	}
+	</style>
 
-<p>
-  <strong>Description:</strong>
-  <%= @post.description %>
-</p>
+	<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Post By:</strong>
-  <%= @post.user.name %>
-</p>
-
-
-<h2>Comments</h2>
-<%@post.comments.each do |comment| %>
-<p>
- 	<strong>Commenter:</strong>
- 	<%= comment.commenter %>
-</p>
-<p>
- 	<strong>Comment:</strong>
- 	<%= comment.body %>
-</p>
-<% end %>
-
-<h2> Add a comment</h2>
-
-<%= form_for ([@post, @post.comments.build]) do |f| %>
 	<p>
-	 	<%= f.label :commenter %>
-	 	<%= f.text_field :commenter %>
+	<strong>Title:</strong>
+	<%= @post.title %>
 	</p>
+
 	<p>
-	 	<%= f.label :body %>
-	 	<%= f.text_field :body %>
+	<strong>Description:</strong>
+	<%= @post.description %>
 	</p>
-	<p> <%= f.submit %></p>
+
+	<p>
+	<strong>Post By:</strong>
+	<%= @post.user.name %>
+	</p>
+
+
+	<%= form_for ([@post, @post.likes.build]) do |f| %>
+	<p class = "hidden">
+	<%= f.label :user_id, value: current_user.id  %>
+	<%= f.text_field :user_id, value: current_user.id %>
+	</p>
+
+	<p> <%= f.submit "Like" %></p>
+	<% end %>
+	
+	<h2> 
+	<%= pluralize(@post.likes.count, "Like") %>
+	</h2>
+
+	<% @post.likes.order("created_at DESC").each do |like| %>
+	<p>
+	<strong>Liked By:<%= like.user.name%></strong>
+	</p>
 	<% end %>
 
 
-<% if current_user == @post.user%>
+	<h2> 
+	<%= pluralize(@post.comments.count, "Comment") %>
+	</h2>
 
-<%= link_to 'Edit', edit_post_path(@post) %> 
+	<% @post.comments.order("created_at DESC").each do |comment| %>
+	<p>
+	<strong><%= comment.user.name%></strong> : <%= comment.body %>
+	</p>
+	<% end %>
 
-<%end%>
+	<h2> Add a comment</h2>
 
-<%= link_to 'Back', posts_path %>
+	<%= form_for ([@post, @post.comments.build]) do |f| %>
+	<p class = "hidden">
+	<%= f.label :user_id, value: current_user.id  %>
+	<%= f.text_field :user_id, value: current_user.id %>
+	</p>
+	<p>
+	<%= f.label :body %>
+	<%= f.text_field :body %>
+	</p>	
+	<p> <%= f.submit "Comment	" %></p>
+	<% end %>
+
+
+	<% if current_user == @post.user%>
+
+	<%= link_to 'Edit', edit_post_path(@post) %> 
+
+	<%end%>
+
+	<%= link_to 'Back', posts_path %>
