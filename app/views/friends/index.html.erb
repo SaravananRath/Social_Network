@@ -1,34 +1,52 @@
-<p id="notice"><%= notice %></p>
+<style type="text/css">
+  th,td{
+    padding: 10px;
+  }
+</style>
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+    
+    $(".alert" ).fadeOut(1000);
 
-<h1>Friends</h1>
+});
+  </script>
 
-<table>
-  <thead>
+<% flash.each do |key, value| %>
+      <div class="<%= flash_class(key) %>" id = "notice">
+            <%= value %>
+      </div>
+<% end %>
+
+<h3>Friends</h3>
+
+<table class="table">
+  <caption>List of friends</caption>
+  <thead class = "thead-light">
     <tr>
-      <th>Friend</th>
-      <!-- <th>Sender</th> -->
-      <th>Status</th>
-      <th colspan="3"></th>
+      <th scope="col">Friend</th>
+      <th scope="col">Status</th>
+      <th scope="col">View</th>
+      <th scope="col" colspan = "2">Delete/Accept</th>
     </tr>
   </thead>
-
   <tbody>
-    
     <% @friend_req.each do |friend_req| %>
       <tr>
         <% if current_user != friend_req.acceptor %>
           <td><%= friend_req.acceptor.name %></td>
           <td><%= friend_req.status %></td>
           <td><%= link_to 'Show', friend_req %></td>
-          <td><%= link_to 'Unfriend', friend_req, method: :delete, data: { confirm: 'Are you sure?' } %></td>``
+          <td><%= link_to 'Unfriend', friend_req, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
           
 
         <% else %>
           <td><%= friend_req.sender.name %></td>
           <td><%= friend_req.status %></td>
-          <td><%= link_to 'Accept Request',friend_path(:friend => {:sender_id => friend_req.sender,:acceptor_id => current_user , :status  => 'TRUE'},:id => friend_req.id), :method => :put  %></td>
+
           <td><%= link_to 'Show', friend_req %></td>
+                    <td><%= link_to 'Accept Request',friend_path(:friend => {:sender_id => friend_req.sender,:acceptor_id => current_user , :status  => 'TRUE'},:id => friend_req.id), :method => :put  %></td>
           <td><%= link_to 'Unfriend', friend_req, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
@@ -36,7 +54,7 @@
     
   </tbody>
 </table>
-
 <br>
 
 <%= link_to 'New Friend', new_friend_path %>
+

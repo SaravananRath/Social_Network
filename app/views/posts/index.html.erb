@@ -1,40 +1,61 @@
-<p id="notice"><%= notice %></p>
+  <script type="text/javascript">
+    
+    $(document).ready(function(){
+    
+    $(".alert" ).fadeOut(1000);
 
-<h1>Posts</h1>
+});
+  </script>
 
-<table>
-  <thead>
+<style type="text/css">
+/*  td,th {
+    padding:10px;
+  }*/
+
+</style>
+
+
+
+<div class="container-fluid">
+<!-- <div class="alert"> -->
+<% flash.each do |key, value| %>
+      <div class="<%= flash_class(key) %>" id = "notice">
+            <%= value %>
+      </div>
+<% end %>
+<!-- </div> -->
+
+<!-- <p id="notice" class="alert alert-success" role="alert"><%= notice %></p> -->
+
+<h3><%= link_to 'New Post', new_post_path %>
+</h3>
+
+<h3>Posts</h3>
+
+<table class="table table-striped">
+  <caption>Posts by users</caption>
+  <thead class = "thead-dark">
     <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th colspan="3"></th>
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th scope="col" colspan="3">View</th>
     </tr>
   </thead>
-
   <tbody>
     <% @posts.each do |post| %>
       <tr>
         <td><%= post.title %></td>
-        <td><%= post.description %></td>
-        <td><%= 'Post By: '+post.user.name %></td>
-
+        <td><%= post.user.name %></td>
         <td><%= link_to 'Show', post %></td>
-
         <% if current_user == post.user%>
-
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <!--       <td><%= link_to 'Edit', edit_post_path(post) %></td> -->
+        <!-- <td><%= link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
         <%end%>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
 
-<%= link_to 'New Post', new_post_path %>
-<br><br>
-<%= link_to 'Friends', friends_path %>
-<br><br>
-<%= link_to 'Messages', conversations_path %>
+</div>
 
