@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Social_Network</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <div class="nav-link">
+        <%= link_to 'Posts', posts_path %>
+        </div>
+        <!-- <a class="nav-link" href="#">Posts <span class="sr-only">(current)</span></a> -->
+      </li>
+      <li class="nav-item">
+        <div class="nav-link">
+        <%= link_to 'Friends', friends_path %>
+        </div>
+      </li>
+      <li class="nav-item">
+        <div class="nav-link">
+        <%= link_to 'Messages', conversations_path %>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+<!--         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li> -->
+  <!--     <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li> -->
+    </ul>
+    
+      <div class="nav-item dropdown">
+         <% if user_signed_in? %>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= current_user.name%>
+        </a>
+        <% else%>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= "User"%>
+        </a>
+        <%end%>
+
+        <% if user_signed_in? %>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <div class="dropdown-item">
+          <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %>
+          </div>
+
+          <div class="dropdown-divider"></div>  
+          <div class="dropdown-item">
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'%>
+          </div>
+        <% else %>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <div class="dropdown-item">
+          <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> 
+          </div>
+
+          <div class="dropdown-divider"></div>  
+          <div class="dropdown-item">
+          <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+          </div>
+        <% end %>
+
+          <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+        </div>
+      </div>
+      <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+      <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+   
+  </div>
+</nav>

@@ -33,7 +33,8 @@ class FriendsController < ApplicationController
 
     respond_to do |format|
       if @friend.save
-        format.html { redirect_to @friend, notice: 'Request was successfully sent.' }
+        flash[:create] = "Frienship Request Sent"
+        format.html { redirect_to @friend }
         format.json { render :show, status: :created, location: @friend }
       else
         format.html { render :new }
@@ -47,7 +48,8 @@ class FriendsController < ApplicationController
   def update
     respond_to do |format|
       if @friend.update(friend_params)
-        format.html { redirect_to @friend, notice: 'Friend was successfully added.' }
+        flash[:update] = "Friend Request Accepted"
+        format.html { redirect_to @friend }
         format.json { render :show, status: :ok, location: @friend }
       else
         format.html { render :edit }
@@ -60,8 +62,9 @@ class FriendsController < ApplicationController
   # DELETE /friends/1.json
   def destroy
     @friend.destroy
+    flash[:delete] = "Friendship deleted"
     respond_to do |format|
-      format.html { redirect_to friends_url, notice: 'Unfriended successfully ' }
+      format.html { redirect_to friends_url }
       format.json { head :no_content }
     end
   end

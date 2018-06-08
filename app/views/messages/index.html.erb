@@ -26,8 +26,10 @@
    <%= f.text_area :body, class: "form-control" %>
  </div>
  <%= f.text_field :user_id, value: current_user.id, type: "hidden" %>
- <div>
+ <div><br>
    <%= f.submit "Add Reply", class: "ui blue labeled submit icon button" %>
  </div>
 
-<% end %>
+<% end %><br>
+
+<%=link_to 'Back', conversations_path%>

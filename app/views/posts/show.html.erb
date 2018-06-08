@@ -1,3 +1,12 @@
+	<script type="text/javascript">
+		
+	$(document).ready(function(){
+    
+    $(".alert" ).fadeOut(3000);
+
+});
+	</script>
+
 	<style type="text/css">
 
 	.hidden{
@@ -5,15 +14,22 @@
 	}
 	</style>
 
-	<p id="notice"><%= notice %></p>
+	<!-- <p id="notice" class="alert alert-success" role="alert"><%= notice %></p> -->
+<!-- <div class="alert"> -->
+	<% flash.each do |key, value| %>
+      <div class="<%= flash_class(key) %>" role="alert" id ='notice'>
+            <%= value %>
+      </div>
+	<% end %>
+<!-- </div> -->
 
 	<p>
-	<strong>Title:</strong>
-	<%= @post.title %>
+	<!-- <strong>Title:</strong> -->
+	<h3> <%= @post.title %></h3>
 	</p>
 
 	<p>
-	<strong>Description:</strong>
+	<!-- <strong>Description:</strong> -->
 	<%= @post.description %>
 	</p>
 
@@ -29,23 +45,24 @@
 	<%= f.text_field :user_id, value: current_user.id %>
 	</p>
 
-	<p> <%= f.submit "Like" %></p>
+	<p> <%= f.submit "Like" %> 
+	<span id="likes"> <%= pluralize(@post.likes.count, "Like") %></span></p>
 	<% end %>
-	
-	<h2> 
-	<%= pluralize(@post.likes.count, "Like") %>
-	</h2>
 
+	
+	 <div class = 'Show_likes'>
 	<% @post.likes.order("created_at DESC").each do |like| %>
 	<p>
-	<strong>Liked By:<%= like.user.name%></strong>
+
+	<strong>Liked By:</strong><%= like.user.name%>
 	</p>
 	<% end %>
+	</div>
 
-
-	<h2> 
+<!-- 	<h4> 
 	<%= pluralize(@post.comments.count, "Comment") %>
-	</h2>
+	</h4> -->
+	<h4>Comments</h4>
 
 	<% @post.comments.order("created_at DESC").each do |comment| %>
 	<p>
@@ -53,7 +70,7 @@
 	</p>
 	<% end %>
 
-	<h2> Add a comment</h2>
+
 
 	<%= form_for ([@post, @post.comments.build]) do |f| %>
 	<p class = "hidden">
@@ -61,17 +78,17 @@
 	<%= f.text_field :user_id, value: current_user.id %>
 	</p>
 	<p>
-	<%= f.label :body %>
-	<%= f.text_field :body %>
+
+	<%= f.text_field :body %><%= f.submit "Comment" %>
 	</p>	
-	<p> <%= f.submit "Comment	" %></p>
+	
 	<% end %>
 
 
 	<% if current_user == @post.user%>
 
-	<%= link_to 'Edit', edit_post_path(@post) %> 
+	<%= link_to 'Edit', edit_post_path(@post) %> | 
 
 	<%end%>
 
-	<%= link_to 'Back', posts_path %>
+	<%= link_to 'Back', posts_path %><% if current_user == @post.user%><td> | <%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
